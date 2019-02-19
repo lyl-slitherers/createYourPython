@@ -4,6 +4,8 @@ print("You are Wolfgang Steinway, making your way across the galaxy in an Interg
 print("You are evading a nuclear war on Earth, barely escaping a Tsar bomba approaching your home town - Berlin.")
 print("Years of global warming has risen the sea levels
 
-x = input("Enter 1 to walk towards it. Enter 2 to run away.")
+print("1. Walk towards the creature")
+print("2. Slowly back away")
+x = input
 if (x == "1"):
     print("You slowly approach the noise and see the shadow of a four legged creature")
