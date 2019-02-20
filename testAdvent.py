@@ -7,7 +7,7 @@ print("Buzzzz Buzzzz - *BREAKING NEWS* SCIENTISTS PREDICT AN 80-MILE WIDE ASTERO
 print("Waking up completely bamboozled, you get on your Samsung Galaxy S229 to confirm the shocking news you just heard.")
 print("Unfortunately, you find out the inevitable - all life on Earth will be wiped out in 2 hours.")
 print("You quickly run and fill your spaceship in your garage with your valuables, your Food Creator™, and you have space for only one more item.")
-print("You can either bring your  _____ or your _____ (NOTE: a dilema which will affect the future choice)")
+print("You can either bring your _____ or your _____ (NOTE: a dilema which will affect the future choice)")
 
 item1 = False;
 item2 = False;
