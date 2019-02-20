@@ -1,14 +1,14 @@
 print("December 26th, 2240")
 print("")
-print("You are Wolfgang Steinway, a 50-year old German man, making your way across the galaxy in a spaceship at the speed of light towards Planet Galactus - a life-bearing planet about half a light year away with no established human civilization.")
+print("You are Wolfgang Steinway, a 27-year old German man, making your way across the galaxy in a spaceship at the speed of light towards Planet Galactus - a life-bearing planet about half a light year away with no established human civilization.")
 print("")
 print("2 Hours before,")
 print("Buzzzz Buzzzz - *BREAKING NEWS* SCIENTISTS PREDICT AN 80-MILE WIDE ASTEROID WILL HIT PLANET EARTH IN 2 HOURS TIME! PREPARE . . . ")
 print("Waking up completely bamboozled, you get on your Samsung Galaxy S229 to confirm the shocking news you just heard.")
 print("Unfortunately, you find out the inevitable - all life on Earth will be wiped out in 2 hours.")
-print("You quickly run and fill your spaceship in your garage with your valuables, your Food Creator™, and you have space for only one more item.")
-print("You can either bring your _____ or your _____ (NOTE: a dilema which will affect the future choice)")
-
+print("You quickly run and fill your spaceship in your garage with your valuables: your Food Creator™," + LIST + ".")
+print("You only have space for one more item.  What do you bring?")
+LIST = ("","your pet Venus Flytrap","your baby teeth","a plastic tupperware container full of weiner schnitzels","your Christmas tree","your lucky glow in the dark snorkle","your flesh tree")
 item1 = False;
 item2 = False;
 x = input("Press 1 to bring ____. Press 2 to bring ____.")
