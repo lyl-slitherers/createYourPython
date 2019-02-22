@@ -7,29 +7,42 @@
 
 import pygame
 from pygame.locals import *
-
+SPAWNPOINT = (200,200)
 WIDTH = 500
 HEIGHT = 500
-
+SENSITIVITY = 2
+shiptype = "pod"
+if(shiptype == "bubba"):
+    SHIPCOLOR = (180,180,180)
+    SHIPSIZE = (25,25)
+    SENSITIVITY = 3
+elif(shiptype == "enemy"):
+    SHIPCOLOR = (225,225,225)
+    SHIPSIZE = (25,35)
+    SENSITIVITY = 4
+elif(shiptype == "pod"):
+    SHIPCOLOR = (255,20,20)
+    SHIPSIZE = (15,20)
+    SENSITIVITY = 2
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
-        self.surf = pygame.Surface((25,25))
-        self.surf.fill((5,255,5))
+        self.surf = pygame.Surface(SHIPSIZE)
+        self.surf.fill(SHIPCOLOR)
         self.rect = self.surf.get_rect()
         
     def update(self, pressed_keys):
         if pressed_keys[K_w]:
-            self.rect.move_ip(0,-5)
+            self.rect.move_ip(0,-SENSITIVITY)
             print("W pressed")
         if pressed_keys[K_a]:
-            self.rect.move_ip(-5,0)
+            self.rect.move_ip(-SENSITIVITY,0)
             print("A pressed")
         if pressed_keys[K_s]:
-            self.rect.move_ip(0,5)
+            self.rect.move_ip(0,SENSITIVITY)
             print("S pressed")
         if pressed_keys[K_d]:
-            self.rect.move_ip(5,0)
+            self.rect.move_ip(SENSITIVITY,0)
             print("D pressed")
         if self.rect.left < 0:
             self.rect.left = 0
@@ -53,7 +66,7 @@ while running:
             pygame.quit()
 
     pressed_keys = pygame.key.get_pressed()
-    screen.clear(0)
+    screen.fill((0,0,30))
     player.update(pressed_keys)
     screen.blit(player.surf,(player.rect))
     pygame.display.flip()
