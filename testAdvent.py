@@ -5,7 +5,6 @@
 import random
 import time
 import sys
-import colorama
 from time import sleep
 from os import system, name 
 
@@ -22,7 +21,7 @@ LISTRESPONSES = ["This answer does not exist, you need to try again.", "Invalid 
                  "Do you know what a number is? Type your answer again being mindful about the number keys on the top of your keyboard",\
                  "What kind of vision do you have? Do you not see the keyboard? Try again."]
 LIST = ["your pet Venus Flytrap","your baby teeth","your plastic tupperware container full of weiner schnitzels",\
-        "your Christmas tree","your lucky glow-in-the-dark snorkle"]
+        "your Christmas tree","your lucky glow-in-the-dark snorkle", "your favorite purple pen", "your red superhero cape"]
 
 line1 = "December 26th, 2240\n\n" + \
         "You are Wolfgang Steinway, a 50-year old German man, making your way across the galaxy in a spaceship at the speed of light towards Planet Galactus - a life-bearing planet about half a light year away with no established human civilization.\n\n"
@@ -62,8 +61,8 @@ for s in line3:
     sys.stdout.write(s)
     sys.stdout.flush()
 
-randomItem1 = LIST[random.randint(0,2)]
-randomItem2 = LIST[random.randint(2,4)]
+randomItem1 = LIST[random.randint(0,3)]
+randomItem2 = LIST[random.randint(4,6)]
 
 print("You can either bring " + randomItem1 + " or " + randomItem2 + ".")
 print("")
@@ -108,8 +107,58 @@ while (cont):
             sleep(0.02)
             sys.stdout.write(s)
             sys.stdout.flush()
+
+        sleep(1)
+
+        line15 = "The next morning, you notice the ships that you were following are completely out of sight.\n" + \
+                 "Confused, you check your radar to locate the other ships, and you see they went around quadrant 271.\n" + \
+                 "You think they might have made a mistake, and decide to meet up with them by going through quadrant 271.\n\n" + \
+                 "Approaching the region, you start hearing little ticks on your ship - like small objects hitting it.\n"
+
+        for s in line15:
+            sleep(0.02)
+            sys.stdout.write(s)
+            sys.stdout.flush()
+
+        cont8 = True
+        
+        while (cont8):
+            a = input("\n++ Press 1 to keep going through the region full speed. \n++ Press 2 to slow down.")
+            if (a == "1"):
+
+                line16 = "\nThe ticks on your ship keep getting louder and louder, until you see full blown asteroids in front of you.\n" + \
+                         "You are forced to take manual control of the ship and need to steer away from the asteroids."
+
+                for s in line16:
+                    sleep(0.02)
+                    sys.stdout.write(s)
+                    sys.stdout.flush()
+
+                #TY: Add a program here to control ship around asteroids here - Make the asteroids really fast here (because user chose to keep going full speed through the belt)
+                
+                cont8 = False
+            elif (a == "2"):
+
+                line16 = "\nThe ticks on your ship keep getting louder and louder, until you see full blown asteroids in front of you.\n" + \
+                         "You are forced to take manual control of the ship and need to steer away from the asteroids."
+
+                for s in line16:
+                    sleep(0.02)
+                    sys.stdout.write(s)
+                    sys.stdout.flush()
+
+                #TY: Add a program here to control ship around asteroids - make asteroids a slower speed (because user chose to slow down)
+                
+                cont8 = False
+            else:
+                print("")
+                print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
+                print("")
+                cont8 = True
             
         cont = False
+
+        
         
     elif (a == "2"):
 
@@ -165,7 +214,7 @@ while (cont):
                         cont5 = False
                     elif (a == "2"):
 
-                        lin13 = "\nGood choice, you don't want to make them any more mad at you.\n" + \
+                        line13 = "\nGood choice, you don't want to make them any more mad at you.\n" + \
                                  "They take you through your airlock into their ship."
 
                         for s in line13:
@@ -213,7 +262,7 @@ while (cont):
                             if (a == "1"):
 
                                 line10 = "\nCongratulations! You got punched in the face and knocked out. Have you not learned your lesson? \n\n" + \
-                                         "The men continue stuffing you in the bag and finally zip you up and take you into their ship."
+                                         "The men continue stuffing you in the bag and finally zip you up, knock you out, and take you into their ship."
 
                                 for s in line10:
                                     sleep(0.02)
@@ -223,7 +272,7 @@ while (cont):
                                 cont4 = False
                             elif (a == "2"):
 
-                                line11 = "\nThe men stuff you in the bag and finally zip you up and take you into their ship."
+                                line11 = "\nThe men stuff you in the bag and finally zip you up, knock you out, and take you into their ship."
 
                                 for s in line11:
                                     sleep(0.02)
@@ -240,7 +289,7 @@ while (cont):
                             cont3 = False
                     elif (a == "2"):
 
-                        line12 = "You agree to their demands, so the men bundle you up and zip you into their bags, taking you into their ship."
+                        line12 = "\nYou agree to their demands, so the men bundle you up, knock you out, and zip you into their bags, taking you into their ship."
 
                         for s in line12:
                             sleep(0.02)
@@ -262,7 +311,94 @@ while (cont):
                 print("")
                 cont2 = True
 
-            #CONTINUE ALONE STORY HERE WHERE YOU ARE BAGGED UP IN THEIR SHIP
+            line17 = "\n\nYou wake up in the bag, seeing a guard turned around watching a space soccer match through your peephole.\n" + \
+                     "In your pocket, you notice you still have " + saveItem + ".\n\n"
+            
+            for s in line17:
+                sleep(0.02)
+                sys.stdout.write(s)
+                sys.stdout.flush()
+
+            cont9 = True
+            while (cont9):
+                a = input("++ Press 1 to try to get out of your bag and knock the guard out now. \n++ Press 2 to be more stealthy and wait for a chance.")
+                if (a == "1"):
+
+                    line18 = "\nRight as you get out of the bag, the guard does an epic 360 degree kick right to your face, knocking you out again.\n\n"
+
+                    for s in line18:
+                        sleep(0.02)
+                        sys.stdout.write(s)
+                        sys.stdout.flush()
+
+                    
+                    cont9 = True
+                elif (a == "2"):
+
+                    line19 = "\nYou wait for a goal to occur on the space soccer game to get out of the bag, so the noise you make would go unnoticed.\n\n" + \
+                             "GOOOOOOOOOAAAAAAAAALLLLLLLLL!!!\n\n" + \
+                             "The teleprompter screams, and you finally get out of the bag, then do a 360 degree power hit right on to the guard's head with " + saveItem + ", knocking them out.\n\n" + \
+                             "You quietly walk about the ship, looking around for an exit to your ship.\n\n" + \
+                             "HEY! What are you doing here? - screams one of the bandits in the hall.\n\n" + \
+                             "You run through the hall as the bandit chases you, and you turn around a corner to stop them in their tracks.\n" + \
+                             "Right as you hear their footsteps near you, you ...\n"
+
+                    for s in line19:
+                        sleep(0.02)
+                        sys.stdout.write(s)
+                        sys.stdout.flush()
+
+                    cont10 = True
+                    while (cont10):
+                        a = input("\n++ Press 1 to do an iron fist take down. \n++ Press 2 to do a ceiling demon take down.")
+                        if (a == "1"):
+
+                            line20 = "\nYou trip the bandit, planting your fist right where they are supposed to fall, knocking them out."
+
+                            for s in line20:
+                                sleep(0.02)
+                                sys.stdout.write(s)
+                                sys.stdout.flush()
+                            
+                            cont10 = False
+                        elif (a == "2"):
+
+                            line21 = "\nYou crawl up the wall, just like Spiderman, and do a flip off the ceiling, landing right onto the bandit. He gets knocked out."
+
+                            for s in line21:
+                                sleep(0.02)
+                                sys.stdout.write(s)
+                                sys.stdout.flush()
+
+                            
+                            cont10 = False
+                        else:
+                            print("")
+                            print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
+                            print("")
+                            cont10 = True
+
+
+                             
+                    line22 = "You drag them into a closet room nearby, and put on their space suit, as well as put on a space helmet you found in the closet.\n\n" + \
+                             "You find an exit, and immediately leave through the airlock, propelling yourself in space using rocket propelled engines on the suit.\n" + \
+                             "You see your ship, and quickly fly right to it.\n" + \
+                             "You turn on your engines, and leave the quadrant as rapidly as you possibly could  and continue your journey to Planet Galactus."
+                    
+                    for s in line22:
+                                sleep(0.02)
+                                sys.stdout.write(s)
+                                sys.stdout.flush()
+
+                    #TY: Put a pygame of the flying thing - there is no asteroid belt here since you are escaping the bandits - just make people take the ship straight to planet galactus
+
+                    
+                    cont9 = False
+                else:
+                    print("")
+                    print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
+                    print("")
+                    cont9 = True
             
         
         cont = False
