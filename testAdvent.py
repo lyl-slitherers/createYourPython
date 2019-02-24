@@ -1,14 +1,14 @@
-#Michael Liamkin, Tyler Gutowski
+#Credits: Michael Liamkin, Tyler Gutowski
 #2/14/2019
-#Space adventure
+#TITLE: THE ESCAPE TO PLANET GALACTUS
+#Instructions:  - must pip install pygame
+#               - uses modules that are preinstalled to python such as random, time, sys
 
 import random
 import time
 import sys
 from time import sleep
 from os import system, name 
-
-#CODE: https://www.geeksforgeeks.org/clear-screen-python/
 
 ##DEFAULT TYPESPEED IS TYPESPEED
 ##DEFAULT TYPEWAITTIME IS 0.5
@@ -85,8 +85,6 @@ MONSTER = False #You attacked the defenseless bandit
 
 #################
 
-
-#CODE: https://stackoverflow.com/questions/20302331/typing-effect-in-python
 print(" ______     _____     __   __   ______     __   __     ______   __  __     ______     ______           ______     ______     __         ______     ______     ______   __  __     ______    ")
 print("/\  __ \   /\  __-.  /\ \ / /  /\  ___\   /\ '-.\ \   /\__  _\ /\ \/\ \   /\  == \   /\  ___\         /\  ___\   /\  __ \   /\ \       /\  __ \   /\  ___\   /\__  _\ /\ \/\ \   /\  ___\   ")
 print("\ \  __ \  \ \ \/\ \ \ \ \' /   \ \  __\   \ \ \-.  \  \/_/\ \/ \ \ \_\ \  \ \  __<   \ \  __\         \ \ \__ \  \ \  __ \  \ \ \____  \ \  __ \  \ \ \____  \/_/\ \/ \ \ \_\ \  \ \___  \  ")
