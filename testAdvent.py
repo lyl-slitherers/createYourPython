@@ -1,14 +1,14 @@
-#Credits: Michael Liamkin, Tyler Gutowski
+#Michael Liamkin, Tyler Gutowski
 #2/14/2019
-#TITLE: THE ESCAPE TO PLANET GALACTUS
-#Instructions:  - must pip install pygame
-#               - uses modules that are preinstalled to python such as random, time, sys
+#Space adventure
 
 import random
 import time
 import sys
 from time import sleep
 from os import system, name 
+
+#CODE: https://www.geeksforgeeks.org/clear-screen-python/
 
 ##DEFAULT TYPESPEED IS TYPESPEED
 ##DEFAULT TYPEWAITTIME IS 0.5
@@ -83,8 +83,16 @@ DAMAGEDSHIP = False #You damaged your ship
 
 MONSTER = False #You attacked the defenseless bandit
 
+OUTOFFUEL = False #You run out of fuel
+
+DAMAGEDSHIP = False #You damage your ship
+
+EASYLIVING = False #Everything goes right
+
 #################
 
+
+#CODE: https://stackoverflow.com/questions/20302331/typing-effect-in-python
 print(" ______     _____     __   __   ______     __   __     ______   __  __     ______     ______           ______     ______     __         ______     ______     ______   __  __     ______    ")
 print("/\  __ \   /\  __-.  /\ \ / /  /\  ___\   /\ '-.\ \   /\__  _\ /\ \/\ \   /\  == \   /\  ___\         /\  ___\   /\  __ \   /\ \       /\  __ \   /\  ___\   /\__  _\ /\ \/\ \   /\  ___\   ")
 print("\ \  __ \  \ \ \/\ \ \ \ \' /   \ \  __\   \ \ \-.  \  \/_/\ \/ \ \ \_\ \  \ \  __<   \ \  __\         \ \ \__ \  \ \  __ \  \ \ \____  \ \  __ \  \ \ \____  \/_/\ \/ \ \ \_\ \  \ \___  \  ")
@@ -199,7 +207,7 @@ line4 = "\nYou start your engine and fly up through the atmosphere, seeing the a
         "Noticing the crowd of spaceships leaving alongside of you, do you decide to follow them or fly alone?\n\n"
 
 for s in line4:
-    sleep(TYPEWAITTIME)
+    sleep(TYPESPEED)
     sys.stdout.write(s)
     sys.stdout.flush()
 
@@ -328,6 +336,7 @@ while (cont):
                         INJURED = True
                         FIGHTER = True
                         line12 = "\nIt turns out the guard in the front ended up dropping you, and you hit your head.  The guard in the back puts you down, and they both kick you once for good measure."+\
+                                 "\nYou fall unconscious."+\
                                  "\nThey continue carrying you to their ship."
 
                         
@@ -392,10 +401,12 @@ while (cont):
 #####
                             cont4 = True
                             while (cont4):
-                                a = input("++ Press 1 to attack John Richardson.\n++Press 2 to lay prone on the floor.")
+                                a = input("++ Press 1 to attack John Richardson.\n++ Press 2 to lay prone on the floor.")
                                 if (a == "1"):
                                     INJURED = True
                                     PASSIVE = False
+                                    FIGHTER = True
+                                    OUTOFFUEL = True
                                     line10 = "\nCongratulations! You got punched in the face and knocked out. Have you not learned your lesson? \n\n" + \
                                              "The men detain you and begin stuffing you in a bodybag.  They begin taking you into their ship."
                                     
@@ -406,11 +417,13 @@ while (cont):
                                     
                                     cont4 = False
                                 elif (a == "2"):
-
+                                    PASSIVE = False
+                                    INJURED = False
+                                    OUTOFFUEL = True
                                     line11 = "\nThe men steal everything you own, excluding "+saveItem+"."+\
                                              "They both ironically apologize and return to their own ship, only to fly away into the depths of space.\n"+\
                                              "You check your fuel gauge and you barely have enough to make it to the nearest merchantile station.\n\n"
-                                    GOTOMERCHANTSTATION = True
+                                    
 
                                     for s in line11:
                                         sleep(TYPESPEED)
@@ -418,19 +431,19 @@ while (cont):
                                         sys.stdout.flush()
                                         
                                     cont4 = False
-                        else:
-                            print("")
-                            print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
-                            print("")
-                            cont = True
-                
+                                else:
+                                    print("")
+                                    print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
+                                    print("")
+                                    cont4 = True
                         cont3 = False
                     elif (a == "2"):
                         PASSIVE = True
+                        INJURED = False
+                        OUTOFFUEL = False
                         line12 = "\nYou agree to their demands, so the men tell you to sit down.\n"+\
                                  "They let you watch as they steal everything off of your ship.\n"+\
                                  "The men thank you for being easy, and offer to fill up your fuel tank.  What kind hearts.\n\n"
-
                         for s in line12:
                             sleep(TYPESPEED)
                             sys.stdout.write(s)
@@ -441,9 +454,7 @@ while (cont):
                         print("")
                         print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
                         print("")
-                        cont3 = True
-                
-                
+                        cont3 = True               
                 cont2 = False
             else:
                 print("")
@@ -582,79 +593,136 @@ while (cont):
                         print("")
                         cont10 = True
 
-                             
+                        
+            if(not(FIGHTER)):
+               line87 = "The bandits leave you to be, and you're grateful for that.\n"+\
+                        "You look back, and the only thing that the bandits left behind was "+saveItem+"."+\
+                        "You turn on your engines, give "+saveItem+" a smile, turn on your FTL drive, and leave the quadrant as fast as you possibly can and continue on your journey to Planet Galactus.\n\n\n"
+
+               for s in line87:
+                        sleep(TYPESPEED)
+                        sys.stdout.write(s)
+                        sys.stdout.flush()
+
+            if(DAMAGEDSHIP):
+                SENTIMENTAL = False
                 line22 = "You drag him into a closet room nearby, and put on his space suit, and put on one of the space helmets you found in the closet.\n\n" + \
-                         "You grab a garbage bag from the closet, and begin filling it with anything you can find.  You manage to get back the majority of your stuff.\n"+\
-                         "You eventually find an escape pod, and propel yourself into space, in an attempt to find your spaceship.\n" + \
-                         "After You see your ship, and quickly fly directly to it.\n" + \
-                         "You turn on your engines, give "+saveItem+" a smile, turn on your FTL drive, and leave the quadrant as fast as you possibly can and continue on your journey to Planet Galactus.\n\n\n"
-                
+                     "You grab a garbage bag from the closet, and begin filling it with anything you can find.  You manage to get back the majority of your stuff.\n"+\
+                     "You eventually find an escape pod, and propel yourself into space, in an attempt to find your spaceship.\n" + \
+                     "After you see your ship, and quickly fly directly to it.\n" + \
+                     "Your ship is in poor condition after the beating given to it by the asteroids."+\
+                     "You need to get your FTL drive repaired."+\
+                     "You do not have enough money to repair your ship, so you are forced into selling "+saveItem+"."
+                for s in line22:
+                            sleep(TYPESPEED)
+                            sys.stdout.write(s)
+                            sys.stdout.flush()
+            elif(OUTOFFUEL):
+                SENTIMENTAL = False
+                line22 = "You drag him into a closet room nearby, and put on his space suit, and put on one of the space helmets you found in the closet.\n\n" + \
+                     "You grab a garbage bag from the closet, and begin filling it with anything you can find.  You manage to get back the majority of your stuff.\n"+\
+                     "You eventually find an escape pod, and propel yourself into space, in an attempt to find your spaceship.\n" + \
+                     "After you see your ship, and quickly fly directly to it.\n" + \
+                     "Your ship is nearly out of fuel.  You need to refill your tank at the nearest Merchantile Outpost.\n"+\
+                     "You do not have enough money to purchase fuel, so you are forced into selling "+saveItem+"."
+                for s in line22:
+                            sleep(TYPESPEED)
+                            sys.stdout.write(s)
+                            sys.stdout.flush()
+            else:
+                line22 = "You drag him into a closet room nearby, and put on his space suit, and put on one of the space helmets you found in the closet.\n\n" + \
+                     "You grab a garbage bag from the closet, and begin filling it with anything you can find.  You manage to get back the majority of your stuff.\n"+\
+                     "You eventually find an escape pod, and propel yourself into space, in an attempt to find your spaceship.\n" + \
+                     "After you see your ship, and quickly fly directly to it.\n" + \
+                     "You turn on your engines, give "+saveItem+" a smile, turn on your FTL drive, and leave the quadrant as fast as you possibly can and continue on your journey to Planet Galactus.\n\n\n"
                 for s in line22:
                             sleep(TYPESPEED)
                             sys.stdout.write(s)
                             sys.stdout.flush()
 
-                #TY: ESCAPE POD NAVIGATION BACK TO YOUR SHIP
+
+            #TY: ESCAPE POD NAVIGATION BACK TO YOUR SHIP
+                            
+            line101 = ""
+            line102 = ""
+            line103 = ""
+            line104 = ""
+            line105 = ""
+            line106 = ""
+            line107 = ""
+            line108 = ""
+            line109 = ""
+            
+            if(not(LONEWOLF) and FIGHTER):
+                line101 = "You put up a good fight against the bandits."
+            if(SLOWPOKE):
+                line102 = "You took your time flying through the asteroid field, and delayed your trip by a few weeks."
+            if(INJURED):
+                line103 = "You managed to get hurt during your endeavors"
+            if(SENTIMENTAL):
+                line104 = "You kept "+saveItem+" with you all the way to Planet Galactus."
+            if(TOOKABEATING):
+                line105 = "You ended up getting beat up by the bandits."
+            if(not(LONEWOLF) and PASSIVE):
+                line106 = "You tried to be passive towards the bandits."
+            if(LONEWOLF):
+                line107 = "You were a lone wolf, and flew solo."
+            if(LONEWOLF and DAMAGEDSHIP):
+                line108 = "You were a poor pilot, and hit a few asteroids."
+            if(not(LONEWOLF) and MONSTER):
+                line109 = "You bonked the bandit on the head without him knowing."
+            if(not(LONEWOLF) and not(FIGHTER)):
+                line101 = "You didn't try to fight the bandits."
+            if(not(SLOWPOKE)):
+                line102 = "You sped through the asteroid field, getting there on time."
+            if(not(INJURED)):
+                line103 = "You stayed safe on the way to Planet Galactus"
+            if(not(SENTIMENTAL)):
+                line104 = "You had to sell "+saveItem+" to make it to Planet Galactus."
+            if(not(TOOKABEATING)):
+                line105 = "You didn't get hurt by the bandits."
+            if(not(LONEWOLF) and not(PASSIVE)):
+                line106 = "You were aggressive towards the bandits."
+            if(not(LONEWOLF)):
+                line107 = "You're sociable, and flew with other ships."
+            if(LONEWOLF and (not(DAMAGEDSHIP))):
+                line108 = "You were a good pilot, and avoided all of the asteroids."
+            if(not(LONEWOLF) and not(MONSTER)):
+                line109 = "You did not hurt the bandit when you could have."
                 
-
-                if(FIGHTER):
-                    line101 = "You put up a good fight against the bandits."
-                if(SLOWPOKE):
-                    line102 = "You took your time flying through the asteroid field, and delayed your trip by a few weeks."
-                if(INJURED):
-                    line103 = "You managed to get hurt during your endeavors"
-                if(SENTIMENTAL):
-                    line104 = "You kept "+saveItem+" with you all the way to Planet Galactus."
-                if(TOOKABEATING):
-                    line105 = "You ended up getting beat up by the bandits."
-                if(PASSIVE):
-                    line106 = "You tried to be passive towards the bandits."
-                if(LONEWOLF):
-                    line107 = "You were a lone wolf, and flew solo."
-                if(DAMAGEDSHIP):
-                    line108 = "You were a poor pilot, and hit a few asteroids."
-                if(MONSTER):
-                    line109 = "You bonked the bandit on the head without him knowing."
-                if(not(FIGHTER)):
-                    line101 = "You didn't try to fight the bandits."
-                if(not(SLOWPOKE)):
-                    line102 = "You sped through the asteroid field, getting there on time."
-                if(not(INJURED)):
-                    line103 = "You stayed safe on the way to Planet Galactus"
-                if(not(SENTIMENTAL)):
-                    line104 = "You had to sell "+saveItem+" to make it to Planet Galactus."
-                if(not(TOOKABEATING)):
-                    line105 = "You didn't get hurt by the bandits."
-                if(not(PASSIVE)):
-                    line106 = "You were aggressive towards the bandits."
-                if(not(LONEWOLF)):
-                    line107 = "You're sociable, and flew with other ships."
-                if(not(DAMAGEDSHIP)):
-                    line108 = "You were a good pilot, and avoided all of the asteroids."
-                if(not(MONSTER)):
-                    line109 = "You did not hurt the bandit when you could have."
-                    
-                line1000 = "Through your adventures:\n\n"+line101+ "\n\n" +line102+ "\n\n" +line103+ "\n\n" +line104+ "\n\n" +line105+ "\n\n" +line106+ "\n\n" +line107+ "\n\n" +line108
-
-                for s in line1000:
-                    sleep(TYPESPEED)
-                    sys.stdout.write(s)
-                    sys.stdout.flush()
-                creds = "Planet Galactus created by Tyler Gutowski and Mishka Liamkin.\n"+\
-                        "Created for the 2019 Codecraft competition.\n"+\
-                        "Tyler Gutowski Github: https://github.com/tygutowski"
-
-                for s in creds:
-                    sleep(TYPESPEED)
-                    sys.stdout.write(s)
-                    sys.stdout.flush()
-
-                    
-            else:
-                print("")
-                print(LISTRESPONSES[random.randint(0,len(LISTRESPONSES)-1)])
-                print("")
-                cont9 = True
+            line1000 = "Through your adventures:\n\n"
+            if(not(line101 == "")):
+                line1000 += line101 + "\n\n"
+            if(not(line102 == "")):
+                line1000 += line102 + "\n\n"
+            if(not(line103 == "")):
+                line1000 += line103 + "\n\n"
+            if(not(line104 == "")):
+                line1000 += line104 + "\n\n"
+            if(not(line105 == "")):
+                line1000 += line105 + "\n\n"
+            if(not(line106 == "")):
+                line1000 += line106 + "\n\n"
+            if(not(line107 == "")):
+                line1000 += line107 + "\n\n"
+            if(not(line108 == "")):
+                line1000 += line108 + "\n\n"
+            if(not(line109 == "")):
+                line1000 += line109 + "\n\n"
+                
+            for s in line1000:
+                sleep(TYPESPEED)
+                sys.stdout.write(s)
+                sys.stdout.flush()
+            creds = "Planet Galactus created by Tyler Gutowski and Mishka Liamkin.\n"+\
+                    "Created for the 2019 Codecraft competition.\n"+\
+                    "Tyler Gutowski Github: https://github.com/tygutowski\n\n\n"+\
+                    "Thank you for playing.  We hope you enjoyed."
+            
+            for s in creds:
+                sleep(TYPESPEED)
+                sys.stdout.write(s)
+                sys.stdout.flush()
             
         cont = False
         cont2 = False
