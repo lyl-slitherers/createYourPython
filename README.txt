@@ -18,7 +18,13 @@
 
 + Player is introduced to the story, and must choose option 1 or 2 when prompted at a certain point
 
-+ If a key is hit while words are being automatically displayed, the rate at which they display will increase
++ For best performance, please full screen the python shell when running the program (Title would shrink otherwise)
+
++ For changing settings:
+
+  ++ Press 1 to change the text delay
+  ++ Press 2 to change the text speed
+  ++ Press 3 to continue
 
 INSTALLATION:
 
