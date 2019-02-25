@@ -54,6 +54,17 @@ pip install pygame
 
 import pygame
 
+pygame.init()
+screen = pygame.display.set_mode((700, 700))
+
+white   = (255, 255, 255)
+black   = (000, 000, 000)
+red     = (255, 000, 000)
+
+clock = pygame.time.Clock()
+
+circle = pygame.Surface((30, 30,))
+
 ________________________________________________________________________________________________________________________________________
 
 # time
