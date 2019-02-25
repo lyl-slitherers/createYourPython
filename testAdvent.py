@@ -957,7 +957,7 @@ while (cont):
 
         if(DAMAGEDSHIP):
             SENTIMENTAL = False
-            line38355 = "Your ship is in poor condition after the beating given to it by the asteroids.\n"+\
+            line38355 = "\n\nYour ship is in poor condition after the beating given to it by the asteroids.\n"+\
                  "You need to get your FTL drive repaired.\n"+\
                  "You do not have enough money to repair your ship, so you are forced into selling "+saveItem+".\n"+\
                  "Although you are sad you had to sell your prized posession, you turn your FTP drive on, and leave the quadrent as quickly as you can, on your way to Planet Galactus.\n"
@@ -985,42 +985,24 @@ while (cont):
         line108 = ""
         line109 = ""
         
-        if(not(LONEWOLF) and FIGHTER):
-            line101 = "You put up a good fight against the bandits."
         if(SLOWPOKE):
             line102 = "You took your time flying through the asteroid field, and delayed your trip by a few weeks."
-        if(INJURED):
-            line103 = "You managed to get hurt during your endeavors"
         if(SENTIMENTAL):
             line104 = "You kept "+saveItem+" with you all the way to Planet Galactus."
         if(TOOKABEATING):
             line105 = "You ended up getting beat up by the bandits."
-        if(not(LONEWOLF) and PASSIVE):
-            line106 = "You tried to be passive towards the bandits."
         if(LONEWOLF):
             line107 = "You were a lone wolf, and flew solo."
         if(LONEWOLF and DAMAGEDSHIP):
             line108 = "You were a poor pilot, and hit a few asteroids."
-        if(not(LONEWOLF) and MONSTER):
-            line109 = "You bonked the bandit on the head without him knowing."
-        if(not(LONEWOLF) and not(FIGHTER)):
-            line101 = "You didn't try to fight the bandits."
         if(not(SLOWPOKE)):
-            line102 = "You sped through the asteroid field, getting there on time."
-        if(not(INJURED)):
-            line103 = "You stayed safe on the way to Planet Galactus"
+            line102 = "You sped through the asteroid field, getting to Planet Galactus on time."
         if(not(SENTIMENTAL)):
             line104 = "You had to sell "+saveItem+" to make it to Planet Galactus."
-        if(not(TOOKABEATING)):
-            line105 = "You didn't get hurt by the bandits."
-        if(not(LONEWOLF) and not(PASSIVE)):
-            line106 = "You were aggressive towards the bandits."
         if(not(LONEWOLF)):
             line107 = "You're sociable, and flew with other ships."
         if(LONEWOLF and (not(DAMAGEDSHIP))):
             line108 = "You were a good pilot, and avoided all of the asteroids."
-        if(not(LONEWOLF) and not(MONSTER)):
-            line109 = "You did not hurt the bandit when you could have."
             
         line1000 = "Through your adventures:\n\n"
         if(not(line101 == "")):
@@ -1055,7 +1037,7 @@ while (cont):
             sleep(TYPESPEED)
             sys.stdout.write(s)
             sys.stdout.flush()
-
+        raw_input()
         ########
     elif (a == "2"):
         cont = False
