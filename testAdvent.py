@@ -1035,7 +1035,7 @@ while (cont):
             sleep(TYPESPEED)
             sys.stdout.write(s)
             sys.stdout.flush()
-        raw_input()
+        sleep(60)
         ########
     elif (a == "2"):
         cont = False
@@ -1465,7 +1465,7 @@ while (cont):
                 sleep(TYPESPEED)
                 sys.stdout.write(s)
                 sys.stdout.flush()
-            
+            sleep(60)
         cont = False
         cont2 = False
         
