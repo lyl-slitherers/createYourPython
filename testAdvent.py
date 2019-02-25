@@ -225,7 +225,7 @@ while (cont):
                 "You decide to introduce yourself to the others.\n" + \
                 "The other ships tell you that there has been word of space robbers between planets X3245 and X4561.\n\n" + \
                 "You make note of the warning, and update your route around the location of the robbers.\n" + \
-                "Returning from a trip to your Food Creator™ to get a cup of tea, you trip and spill tea all over your space radio.\n" + \
+                "Returning from a trip to your Food Generator™ to get a cup of tea, you trip and spill tea all over your space radio.\n" + \
                 "Your begin to hear static noise from your radio. Unconcerned, you are sure that the radio was warning about the space robbers.\n" + \
                 "You brush your teeth, admire " + saveItem + ", and go to sleep.\n\n"
         for s in line5:
@@ -365,38 +365,38 @@ while (cont):
                 asteroids = []
 
                 # asteroid -> (x, y, radius, angle, speed)
-                asteroid1 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
-                asteroid2 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
-                asteroid3 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
-                asteroid4 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
-                asteroid5 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
-                asteroid6 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
-                asteroid7 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
-                asteroid8 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
-                asteroid11 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
-                asteroid21 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
-                asteroid31 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
-                asteroid41 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
-                asteroid51 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
-                asteroid61 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
-                asteroid71 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
-                asteroid81 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
-                asteroid12 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
-                asteroid22 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
-                asteroid32 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
-                asteroid42 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
-                asteroid52 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
-                asteroid62 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
-                asteroid72 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
-                asteroid82 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
-                asteroid13 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
-                asteroid23 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
-                asteroid33 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
-                asteroid43 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
-                asteroid53 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
-                asteroid63 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
-                asteroid73 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
-                asteroid83 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid1 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid2 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid3 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid4 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid5 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid6 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid7 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid8 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid11 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid21 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid31 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid41 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid51 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid61 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid71 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid81 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid12 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid22 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid32 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid42 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid52 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid62 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid72 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid82 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid13 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid23 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid33 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid43 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid53 = [random.randint(0, width-50), random.randint(0, height-50), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid63 = [random.randint(0, width-50), random.randint(0, height-50), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid73 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid83 = [random.randint(0, width-50), random.randint(0, height-50), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
                 asteroids.append(asteroid1)
                 asteroids.append(asteroid2)
                 asteroids.append(asteroid3)
@@ -989,8 +989,6 @@ while (cont):
             line102 = "You took your time flying through the asteroid field, and delayed your trip by a few weeks."
         if(SENTIMENTAL):
             line104 = "You kept "+saveItem+" with you all the way to Planet Galactus."
-        if(TOOKABEATING):
-            line105 = "You ended up getting beat up by the bandits."
         if(LONEWOLF):
             line107 = "You were a lone wolf, and flew solo."
         if(LONEWOLF and DAMAGEDSHIP):
@@ -1004,7 +1002,7 @@ while (cont):
         if(LONEWOLF and (not(DAMAGEDSHIP))):
             line108 = "You were a good pilot, and avoided all of the asteroids."
             
-        line1000 = "Through your adventures:\n\n"
+        line1000 = "\n\nThrough your adventures:\n\n"
         if(not(line101 == "")):
             line1000 += line101 + "\n\n"
         if(not(line102 == "")):
