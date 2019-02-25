@@ -1,12 +1,12 @@
 #Credits: Michael Liamkin
-	 Tyler Gutowski
+	  Tyler Gutowski
 
 #Date of Program Creation: February 14, 2019
 
 #Contact: mliamkin56@gmail.com
 	  tygutowski@gmail.com
 
-#Name: THE ESCAPE TO PLANET GALACTUS
+#Name: PLANET GALACTUS
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
