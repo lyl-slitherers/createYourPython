@@ -6,7 +6,10 @@ import random
 import time
 import sys
 from time import sleep
-from os import system, name 
+from os import system, name
+import pygame
+import pygame.freetype
+import math
 
 #CODE: https://www.geeksforgeeks.org/clear-screen-python/
 
@@ -255,7 +258,360 @@ while (cont):
                     sys.stdout.write(s)
                     sys.stdout.flush()
                 hitanything = False
-                #TY: ASTEROIDS MOVE FAST
+
+
+                
+                pygame.font.init()
+                pygame.init()
+                SPE = 1.6
+                width = 1600
+                height = 1000
+                screen = pygame.display.set_mode((width, height))
+                SPE = 1
+
+                green   = (30, 255, 30)
+                black   = (000, 000, 000)
+                red     = (255, 000, 000)
+                blue    = (30, 30, 255)
+                hit=0
+
+                clock = pygame.time.Clock()
+
+                circle = pygame.Surface((30, 30,))
+
+                running = True
+
+                def playercollision(asteroid, xy):
+                    # asteroid  => (x, y, r)
+                    # bullet    => (angle, x, y)
+                    a_x, a_y, a_r, _, _ = asteroid
+
+                    b_x, b_y = xy
+
+                    dx = a_x - b_x
+                    dy = a_y - b_y
+
+                    distance = math.hypot(dx, dy)
+                    if distance < a_r:
+                        return True
+                    return False
+
+                def addVectors(angle1, length1, angle2, length2):
+                    x  = math.sin(angle1) * length1 + math.sin(angle2) * length2
+                    y  = math.cos(angle1) * length1 + math.cos(angle2) * length2
+                    
+                    angle = 0.5 * math.pi - math.atan2(y, x)
+                    length = math.hypot(x, y)
+
+                    return (angle, length)
+
+                def draw_asteroid(a):
+                    a[0] %= width
+                    a[1] %= height
+                    pygame.draw.circle(screen, green, (int(a[0]), int(a[1])), a[2], 1)
+
+                def draw_end(a,b,c):
+                    pygame.draw.circle(screen, blue, (a, b), c, 4)
+                    
+                def explode_asteroid(a):
+                    # this function will take the position and radius of an asteroid and return
+                    # the points and radii of three smaller asteroids
+                    x, y, r, angle, speed = a
+                    # this will be how far away from the center the exploded asteroids will be
+                    diff = r * 1.3
+                    # make the new size for the asteroids half as big
+                    new_r = r / 2
+                    # set a random angle and speed
+                    angle_1 = random.random() * (math.pi * 2)
+                    speed_1 = random.random() * .5
+
+                    angle_2 = random.random() * (math.pi * 2)
+                    speed_2 = random.random() * .5
+
+                    angle_3 = random.random() * (math.pi * 2)
+                    speed_3 = random.random() * .5
+
+                    x1, y1 = int(math.cos(angle_1) * diff + x), int(math.sin(angle_1) * diff + y)
+                    x2, y2 = int(math.cos(angle_2) * diff + x), int(math.sin(angle_2) * diff + y)
+                    x3, y3 = int(math.cos(angle_3) * diff + x), int(math.sin(angle_3) * diff + y)
+
+                    return [x1, y1, new_r, angle_1, speed_1], [x2, y2, new_r, angle_2, speed_2], [x3, y3, new_r, angle_3, speed_3]
+                    
+
+                def draw_spaceship(x, y, angle):
+                    magnitude = 15
+                    p1_angle = angle
+                    p2_angle = angle + math.radians(145)
+                    p3_angle = angle - math.radians(145)
+                    p1 = (math.cos(p1_angle) * magnitude + x, -math.sin(p1_angle) * magnitude + y)
+                    p2 = (math.cos(p2_angle) * magnitude + x, -math.sin(p2_angle) * magnitude + y)
+                    p3 = (math.cos(p3_angle) * magnitude + x, -math.sin(p3_angle) * magnitude + y)
+
+                    pygame.draw.line(screen, green, (p1[0], p1[1]), (p2[0], p2[1]))
+                    pygame.draw.line(screen, green, (p1[0], p1[1]), (p3[0], p3[1]))
+                    pygame.draw.line(screen, green, (p2[0], p2[1]), (p3[0], p3[1]))
+
+
+                angle = math.pi / 2
+                angle_change = 0
+                trajectory_angle = angle
+
+                x, y = width-20, height-20
+
+                speed = 0
+                thrust = 0
+                max_speed = 12
+
+                asteroids = []
+
+                # asteroid -> (x, y, radius, angle, speed)
+                asteroid1 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid2 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid3 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid4 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid5 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid6 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid7 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid8 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid11 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid21 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid31 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid41 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid51 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid61 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid71 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid81 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid12 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid22 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid32 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid42 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid52 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid62 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid72 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid82 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid13 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid23 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid33 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid43 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid53 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid63 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid73 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid83 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroids.append(asteroid1)
+                asteroids.append(asteroid2)
+                asteroids.append(asteroid3)
+                asteroids.append(asteroid4)
+                asteroids.append(asteroid5)
+                asteroids.append(asteroid6)
+                asteroids.append(asteroid7)
+                asteroids.append(asteroid8)
+                asteroids.append(asteroid11)
+                asteroids.append(asteroid21)
+                asteroids.append(asteroid31)
+                asteroids.append(asteroid41)
+                asteroids.append(asteroid51)
+                asteroids.append(asteroid61)
+                asteroids.append(asteroid71)
+                asteroids.append(asteroid81)
+                asteroids.append(asteroid12)
+                asteroids.append(asteroid22)
+                asteroids.append(asteroid32)
+                asteroids.append(asteroid42)
+                asteroids.append(asteroid52)
+                asteroids.append(asteroid62)
+                asteroids.append(asteroid72)
+                asteroids.append(asteroid82)
+                asteroids.append(asteroid13)
+                asteroids.append(asteroid23)
+                asteroids.append(asteroid33)
+                asteroids.append(asteroid43)
+                asteroids.append(asteroid53)
+                asteroids.append(asteroid63)
+                asteroids.append(asteroid73)
+                asteroids.append(asteroid83)
+
+                stars = [(random.randint(0, width-1), random.randint(0, height-1)) for x in range(140)]
+
+                bullet_speed = 5
+
+                bullets = []
+
+
+
+                while running:
+                    if(hit==0):
+                        green = (30, 255, 30)
+                    if(hit>0):
+                        green = (255, 30, 30)                    
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            running = False
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_LEFT:
+                                angle_change = .03
+                            elif event.key == pygame.K_RIGHT:
+                                angle_change = -.03
+                            elif event.key == pygame.K_UP:
+                                thrust = .04
+                            elif event.key == pygame.K_SPACE:
+                                bullet_angle = angle
+                                # adjust the position of the bullet so that it is comming
+                                # from the front point of the ship
+                                offset_bullet_x = x + math.cos(bullet_angle) * 30
+                                offset_bullet_y = y + -math.sin(bullet_angle) * 30
+                                bullets.append([bullet_angle, offset_bullet_x, offset_bullet_y])
+                        if event.type == pygame.KEYUP:
+                            if event.key == pygame.K_LEFT:
+                                angle_change = 0
+                            elif event.key == pygame.K_RIGHT:
+                                angle_change = 0
+                            elif event.key == pygame.K_UP:
+                                thrust = 0
+
+                    screen.fill(black)
+
+                    # draw the bullets
+                    for b in bullets:
+                        bullet_angle = b[0]
+                        bullet_x = b[1]
+                        bullet_y = b[2]
+                        bullet_x_offset = math.cos(bullet_angle) * 4
+                        bullet_y_offset = -math.sin(bullet_angle) * 4
+
+                        pygame.draw.line(screen,
+                                (255, 0, 0),
+                                (bullet_x, bullet_y),
+                                (int(bullet_x + bullet_x_offset), int(bullet_y + bullet_y_offset)),
+                                2
+                            )
+
+                        b[1] += math.cos(bullet_angle) * bullet_speed
+                        b[2] -= math.sin(bullet_angle) * bullet_speed
+                        if b[1] > 700 or b[2] > 700 or b[1] < 0 or b[2] < 0:
+                            bullets.remove(b)
+
+                    # draw the stars
+                    for star in stars:
+                        star_x, star_y = star[0], star[1]
+                        pygame.draw.line(screen, green, (star_x, star_y), (star_x, star_y))
+
+
+                    # this is the direction the spaceship is pointing
+                    angle += angle_change
+
+                    # the trajectory angle is the angle that the spaceship is moving, not the
+                    # angle it is pointing. if the player is pressing the up key, a vector
+                    # will be added to change the direciton and speed 
+                    trajectory_angle, speed = addVectors(trajectory_angle, speed,angle, thrust)
+
+                    # this just limits the speed of the spaceship
+                    if speed > max_speed:
+                        speed = max_speed
+                    if(speed>0):
+                        speed -= 0.005
+                    # update the position of the spaceship
+                    x += math.cos(trajectory_angle) * speed
+                    y -= math.sin(trajectory_angle) * speed
+
+                    # make the spaceship appear on the other side of the it goes beyond the
+                    # screen
+
+                    # make the spaceship appear on the other side if it goes beyond the screen
+                    if(x>width-2):
+                        x = width-1
+                    if(y>height-2):
+                        y = height-1
+                    if(x<0):
+                        x = 1
+                    if(y<0):
+                        y = 1
+                    for a in asteroids:
+                        # asteroid -> [x, y, r, angle, speed]
+
+
+                        # update the positions of the asteroids
+                        a[0] += math.cos(a[3]) * a[4]
+                        a[1] -= math.sin(a[3]) * a[4]
+                        draw_asteroid(a)
+                        
+                    
+                    # Check for 
+                    asteroids_copy = asteroids[:]
+                    for a in asteroids:
+                        if playercollision(a, (x,y)):
+                            hit+=1
+                            # remove all asteroids smaller than 10
+                            if a[2] < 20:
+                                asteroids_copy.remove(a)
+                                continue
+                    endpointx = 100
+                    endpointy = 100
+                    endpointr = 35
+                    if playercollision((endpointx, endpointy, endpointr, 0, 0), (x,y)):
+                        screen.fill((0,0,0))
+                        running = False
+                        pygame.quit()
+                    else:
+                        draw_end(endpointx, endpointy ,endpointr)                        
+                            
+                        asteroids = asteroids_copy[:]
+
+                        draw_spaceship(x, y, angle)
+                        
+                        font = pygame.font.SysFont("terminal", 32)
+                        if(hit>0):
+                            text = font.render("SHIP IN CRITICAL CONDITION - CONTINUE FLYING TO DESTINATION", True, (green))
+                            screen.blit(text,(30, 30))
+                            hitanything = True
+                        pygame.display.flip()
+
+                        clock.tick(90)
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
                 if(hitanything):
                     DAMAGEDSHIP = True
                     GOTOMERCHANTSTATION = True
@@ -269,7 +625,324 @@ while (cont):
                     sys.stdout.write(s)
                     sys.stdout.flush()
                 hitanything = False
-                #TY: ASTEROIDS MOVE SLOWLY
+
+
+
+                pygame.font.init()
+                pygame.init()
+                SPE = 1.6
+                width = 1600
+                height = 1000
+                screen = pygame.display.set_mode((width, height))
+                SPE = 1
+
+                green   = (30, 255, 30)
+                black   = (000, 000, 000)
+                red     = (255, 000, 000)
+                blue    = (30, 30, 255)
+                hit=0
+
+                clock = pygame.time.Clock()
+
+                circle = pygame.Surface((30, 30,))
+
+                running = True
+
+                def playercollision(asteroid, xy):
+                    # asteroid  => (x, y, r)
+                    # bullet    => (angle, x, y)
+                    a_x, a_y, a_r, _, _ = asteroid
+
+                    b_x, b_y = xy
+
+                    dx = a_x - b_x
+                    dy = a_y - b_y
+
+                    distance = math.hypot(dx, dy)
+                    if distance < a_r:
+                        return True
+                    return False
+
+                def addVectors(angle1, length1, angle2, length2):
+                    x  = math.sin(angle1) * length1 + math.sin(angle2) * length2
+                    y  = math.cos(angle1) * length1 + math.cos(angle2) * length2
+                    
+                    angle = 0.5 * math.pi - math.atan2(y, x)
+                    length = math.hypot(x, y)
+
+                    return (angle, length)
+
+                def draw_asteroid(a):
+                    a[0] %= width
+                    a[1] %= height
+                    pygame.draw.circle(screen, green, (int(a[0]), int(a[1])), a[2], 1)
+
+                def draw_end(a,b,c):
+                    pygame.draw.circle(screen, blue, (a, b), c, 4)
+                    
+                def explode_asteroid(a):
+                    # this function will take the position and radius of an asteroid and return
+                    # the points and radii of three smaller asteroids
+                    x, y, r, angle, speed = a
+                    # this will be how far away from the center the exploded asteroids will be
+                    diff = r * 1.3
+                    # make the new size for the asteroids half as big
+                    new_r = r / 2
+                    # set a random angle and speed
+                    angle_1 = random.random() * (math.pi * 2)
+                    speed_1 = random.random() * .5
+
+                    angle_2 = random.random() * (math.pi * 2)
+                    speed_2 = random.random() * .5
+
+                    angle_3 = random.random() * (math.pi * 2)
+                    speed_3 = random.random() * .5
+
+                    x1, y1 = int(math.cos(angle_1) * diff + x), int(math.sin(angle_1) * diff + y)
+                    x2, y2 = int(math.cos(angle_2) * diff + x), int(math.sin(angle_2) * diff + y)
+                    x3, y3 = int(math.cos(angle_3) * diff + x), int(math.sin(angle_3) * diff + y)
+
+                    return [x1, y1, new_r, angle_1, speed_1], [x2, y2, new_r, angle_2, speed_2], [x3, y3, new_r, angle_3, speed_3]
+                    
+
+                def draw_spaceship(x, y, angle):
+                    magnitude = 15
+                    p1_angle = angle
+                    p2_angle = angle + math.radians(145)
+                    p3_angle = angle - math.radians(145)
+                    p1 = (math.cos(p1_angle) * magnitude + x, -math.sin(p1_angle) * magnitude + y)
+                    p2 = (math.cos(p2_angle) * magnitude + x, -math.sin(p2_angle) * magnitude + y)
+                    p3 = (math.cos(p3_angle) * magnitude + x, -math.sin(p3_angle) * magnitude + y)
+
+                    pygame.draw.line(screen, green, (p1[0], p1[1]), (p2[0], p2[1]))
+                    pygame.draw.line(screen, green, (p1[0], p1[1]), (p3[0], p3[1]))
+                    pygame.draw.line(screen, green, (p2[0], p2[1]), (p3[0], p3[1]))
+
+
+                angle = math.pi / 2
+                angle_change = 0
+                trajectory_angle = angle
+
+                x, y = width-20, height-20
+
+                speed = 0
+                thrust = 0
+                max_speed = 12
+
+                asteroids = []
+
+                # asteroid -> (x, y, radius, angle, speed)
+                asteroid1 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid2 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid3 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid4 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid5 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid6 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid7 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid8 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid11 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid21 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid31 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid41 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid51 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid61 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid71 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid81 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid12 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid22 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid32 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid42 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid52 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid62 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid72 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid82 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroid13 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid23 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
+                asteroid33 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
+                asteroid43 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
+                asteroid53 = [random.randint(0, width-1), random.randint(0, height-1), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .25*SPE]
+                asteroid63 = [random.randint(0, width-1), random.randint(0, height-1), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .55*SPE]
+                asteroid73 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .85*SPE]
+                asteroid83 = [random.randint(0, width-1), random.randint(0, height-1), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .95*SPE]
+                asteroids.append(asteroid1)
+                asteroids.append(asteroid2)
+                asteroids.append(asteroid3)
+                asteroids.append(asteroid4)
+                asteroids.append(asteroid5)
+                asteroids.append(asteroid6)
+                asteroids.append(asteroid7)
+                asteroids.append(asteroid8)
+                asteroids.append(asteroid11)
+                asteroids.append(asteroid21)
+                asteroids.append(asteroid31)
+                asteroids.append(asteroid41)
+                asteroids.append(asteroid51)
+                asteroids.append(asteroid61)
+                asteroids.append(asteroid71)
+                asteroids.append(asteroid81)
+                asteroids.append(asteroid12)
+                asteroids.append(asteroid22)
+                asteroids.append(asteroid32)
+                asteroids.append(asteroid42)
+                asteroids.append(asteroid52)
+                asteroids.append(asteroid62)
+                asteroids.append(asteroid72)
+                asteroids.append(asteroid82)
+                asteroids.append(asteroid13)
+                asteroids.append(asteroid23)
+                asteroids.append(asteroid33)
+                asteroids.append(asteroid43)
+                asteroids.append(asteroid53)
+                asteroids.append(asteroid63)
+                asteroids.append(asteroid73)
+                asteroids.append(asteroid83)
+
+                stars = [(random.randint(0, width-1), random.randint(0, height-1)) for x in range(140)]
+
+                bullet_speed = 5
+
+                bullets = []
+
+
+
+                while running:
+                    if(hit==0):
+                        green = (30, 255, 30)
+                    if(hit>0):
+                        green = (255, 30, 30)                    
+                    for event in pygame.event.get():
+                        if event.type == pygame.QUIT:
+                            running = False
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_LEFT:
+                                angle_change = .03
+                            elif event.key == pygame.K_RIGHT:
+                                angle_change = -.03
+                            elif event.key == pygame.K_UP:
+                                thrust = .04
+                            elif event.key == pygame.K_SPACE:
+                                bullet_angle = angle
+                                # adjust the position of the bullet so that it is comming
+                                # from the front point of the ship
+                                offset_bullet_x = x + math.cos(bullet_angle) * 30
+                                offset_bullet_y = y + -math.sin(bullet_angle) * 30
+                                bullets.append([bullet_angle, offset_bullet_x, offset_bullet_y])
+                        if event.type == pygame.KEYUP:
+                            if event.key == pygame.K_LEFT:
+                                angle_change = 0
+                            elif event.key == pygame.K_RIGHT:
+                                angle_change = 0
+                            elif event.key == pygame.K_UP:
+                                thrust = 0
+
+                    screen.fill(black)
+
+                    # draw the bullets
+                    for b in bullets:
+                        bullet_angle = b[0]
+                        bullet_x = b[1]
+                        bullet_y = b[2]
+                        bullet_x_offset = math.cos(bullet_angle) * 4
+                        bullet_y_offset = -math.sin(bullet_angle) * 4
+
+                        pygame.draw.line(screen,
+                                (255, 0, 0),
+                                (bullet_x, bullet_y),
+                                (int(bullet_x + bullet_x_offset), int(bullet_y + bullet_y_offset)),
+                                2
+                            )
+
+                        b[1] += math.cos(bullet_angle) * bullet_speed
+                        b[2] -= math.sin(bullet_angle) * bullet_speed
+                        if b[1] > 700 or b[2] > 700 or b[1] < 0 or b[2] < 0:
+                            bullets.remove(b)
+
+                    # draw the stars
+                    for star in stars:
+                        star_x, star_y = star[0], star[1]
+                        pygame.draw.line(screen, green, (star_x, star_y), (star_x, star_y))
+
+
+                    # this is the direction the spaceship is pointing
+                    angle += angle_change
+
+                    # the trajectory angle is the angle that the spaceship is moving, not the
+                    # angle it is pointing. if the player is pressing the up key, a vector
+                    # will be added to change the direciton and speed 
+                    trajectory_angle, speed = addVectors(trajectory_angle, speed,angle, thrust)
+
+                    # this just limits the speed of the spaceship
+                    if speed > max_speed:
+                        speed = max_speed
+                    if(speed>0):
+                        speed -= 0.005
+                    # update the position of the spaceship
+                    x += math.cos(trajectory_angle) * speed
+                    y -= math.sin(trajectory_angle) * speed
+
+                    # make the spaceship appear on the other side of the it goes beyond the
+                    # screen
+
+                    # make the spaceship appear on the other side if it goes beyond the screen
+                    if(x>width-2):
+                        x = width-1
+                    if(y>height-2):
+                        y = height-1
+                    if(x<0):
+                        x = 1
+                    if(y<0):
+                        y = 1
+                    for a in asteroids:
+                        # asteroid -> [x, y, r, angle, speed]
+
+
+                        # update the positions of the asteroids
+                        a[0] += math.cos(a[3]) * a[4]
+                        a[1] -= math.sin(a[3]) * a[4]
+                        draw_asteroid(a)
+                        
+                    
+                    # Check for 
+                    asteroids_copy = asteroids[:]
+                    for a in asteroids:
+                        if playercollision(a, (x,y)):
+                            hit+=1
+                            # remove all asteroids smaller than 10
+                            if a[2] < 20:
+                                asteroids_copy.remove(a)
+                                continue
+                    endpointx = 100
+                    endpointy = 100
+                    endpointr = 35
+                    if playercollision((endpointx, endpointy, endpointr, 0, 0), (x,y)):
+                        screen.fill((0,0,0))
+                        running = False
+                        pygame.quit()
+                    else:
+                        draw_end(endpointx, endpointy ,endpointr)                        
+                            
+                        asteroids = asteroids_copy[:]
+
+                        draw_spaceship(x, y, angle)
+                        
+                        font = pygame.font.SysFont("terminal", 32)
+                        if(hit>0):
+                            text = font.render("SHIP IN CRITICAL CONDITION - CONTINUE FLYING TO DESTINATION", True, (green))
+                            screen.blit(text,(30, 30))
+                            hitanything = True
+                            
+                        pygame.display.flip()
+
+                        clock.tick(90)
+
+
+
+
+
+
+
+
+                    
                 if(hitanything):
                     DAMAGEDSHIP = True
                     GOTOMERCHANTSTATION = True
@@ -280,9 +953,110 @@ while (cont):
                 print("")
                 cont8 = True
         cont = False
+        ########
+
+        if(DAMAGEDSHIP):
+            SENTIMENTAL = False
+            line38355 = "Your ship is in poor condition after the beating given to it by the asteroids.\n"+\
+                 "You need to get your FTL drive repaired.\n"+\
+                 "You do not have enough money to repair your ship, so you are forced into selling "+saveItem+".\n"+\
+                 "Although you are sad you had to sell your prized posession, you turn your FTP drive on, and leave the quadrent as quickly as you can, on your way to Planet Galactus.\n"
+            for s in line38355:
+                        sleep(TYPESPEED)
+                        sys.stdout.write(s)
+                        sys.stdout.flush()
+
+        if(not(DAMAGEDSHIP)):
+            SENTIMENTAL = True
+            line38354 = "Your ship was in pristeen condition, even after being pelted by small rocks, though it could use a new paintjob.\n"+\
+                 "You're glad that "+saveItem+" has kept you company through your trek between the asteroids.\n"+\
+                 "You turn your FTP drive on, and leave the quadrent as quickly as you can, on your way to Planet Galactus.\n"
+            for s in line38354:
+                        sleep(TYPESPEED)
+                        sys.stdout.write(s)
+                        sys.stdout.flush()
+        line101 = ""
+        line102 = ""
+        line103 = ""
+        line104 = ""
+        line105 = ""
+        line106 = ""
+        line107 = ""
+        line108 = ""
+        line109 = ""
         
+        if(not(LONEWOLF) and FIGHTER):
+            line101 = "You put up a good fight against the bandits."
+        if(SLOWPOKE):
+            line102 = "You took your time flying through the asteroid field, and delayed your trip by a few weeks."
+        if(INJURED):
+            line103 = "You managed to get hurt during your endeavors"
+        if(SENTIMENTAL):
+            line104 = "You kept "+saveItem+" with you all the way to Planet Galactus."
+        if(TOOKABEATING):
+            line105 = "You ended up getting beat up by the bandits."
+        if(not(LONEWOLF) and PASSIVE):
+            line106 = "You tried to be passive towards the bandits."
+        if(LONEWOLF):
+            line107 = "You were a lone wolf, and flew solo."
+        if(LONEWOLF and DAMAGEDSHIP):
+            line108 = "You were a poor pilot, and hit a few asteroids."
+        if(not(LONEWOLF) and MONSTER):
+            line109 = "You bonked the bandit on the head without him knowing."
+        if(not(LONEWOLF) and not(FIGHTER)):
+            line101 = "You didn't try to fight the bandits."
+        if(not(SLOWPOKE)):
+            line102 = "You sped through the asteroid field, getting there on time."
+        if(not(INJURED)):
+            line103 = "You stayed safe on the way to Planet Galactus"
+        if(not(SENTIMENTAL)):
+            line104 = "You had to sell "+saveItem+" to make it to Planet Galactus."
+        if(not(TOOKABEATING)):
+            line105 = "You didn't get hurt by the bandits."
+        if(not(LONEWOLF) and not(PASSIVE)):
+            line106 = "You were aggressive towards the bandits."
+        if(not(LONEWOLF)):
+            line107 = "You're sociable, and flew with other ships."
+        if(LONEWOLF and (not(DAMAGEDSHIP))):
+            line108 = "You were a good pilot, and avoided all of the asteroids."
+        if(not(LONEWOLF) and not(MONSTER)):
+            line109 = "You did not hurt the bandit when you could have."
+            
+        line1000 = "Through your adventures:\n\n"
+        if(not(line101 == "")):
+            line1000 += line101 + "\n\n"
+        if(not(line102 == "")):
+            line1000 += line102 + "\n\n"
+        if(not(line103 == "")):
+            line1000 += line103 + "\n\n"
+        if(not(line104 == "")):
+            line1000 += line104 + "\n\n"
+        if(not(line105 == "")):
+            line1000 += line105 + "\n\n"
+        if(not(line106 == "")):
+            line1000 += line106 + "\n\n"
+        if(not(line107 == "")):
+            line1000 += line107 + "\n\n"
+        if(not(line108 == "")):
+            line1000 += line108 + "\n\n"
+        if(not(line109 == "")):
+            line1000 += line109 + "\n\n"
+            
+        for s in line1000:
+            sleep(TYPESPEED)
+            sys.stdout.write(s)
+            sys.stdout.flush()
+        creds = "Planet Galactus created by Tyler Gutowski and Mishka Liamkin.\n"+\
+                "Created for the 2019 Codecraft competition.\n"+\
+                "Tyler Gutowski Github: https://github.com/tygutowski\n\n\n"+\
+                "Thank you for playing.  We hope you enjoyed."
         
-        
+        for s in creds:
+            sleep(TYPESPEED)
+            sys.stdout.write(s)
+            sys.stdout.flush()
+
+        ########
     elif (a == "2"):
         cont = False
         LONEWOLF = True
@@ -604,19 +1378,7 @@ while (cont):
                         sys.stdout.write(s)
                         sys.stdout.flush()
 
-            if(DAMAGEDSHIP):
-                SENTIMENTAL = False
-                line22 = "You drag him into a closet room nearby, and put on his space suit, and put on one of the space helmets you found in the closet.\n\n" + \
-                     "You grab a garbage bag from the closet, and begin filling it with anything you can find.  You manage to get back the majority of your stuff.\n"+\
-                     "You eventually find an escape pod, and propel yourself into space, in an attempt to find your spaceship.\n" + \
-                     "After you see your ship, and quickly fly directly to it.\n" + \
-                     "Your ship is in poor condition after the beating given to it by the asteroids."+\
-                     "You need to get your FTL drive repaired."+\
-                     "You do not have enough money to repair your ship, so you are forced into selling "+saveItem+"."
-                for s in line22:
-                            sleep(TYPESPEED)
-                            sys.stdout.write(s)
-                            sys.stdout.flush()
+
             elif(OUTOFFUEL):
                 SENTIMENTAL = False
                 line22 = "You drag him into a closet room nearby, and put on his space suit, and put on one of the space helmets you found in the closet.\n\n" + \
