@@ -264,8 +264,8 @@ while (cont):
                 pygame.font.init()
                 pygame.init()
                 SPE = 1.6
-                width = 1600
-                height = 1000
+                width = 1400
+                height = 700
                 screen = pygame.display.set_mode((width, height))
                 SPE = 1
 
@@ -631,8 +631,8 @@ while (cont):
                 pygame.font.init()
                 pygame.init()
                 SPE = 1.6
-                width = 1600
-                height = 1000
+                width = 1400
+                height = 700
                 screen = pygame.display.set_mode((width, height))
                 SPE = 1
 
