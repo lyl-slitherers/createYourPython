@@ -1476,7 +1476,7 @@ while (cont):
                 sleep(TYPESPEED)
                 sys.stdout.write(s)
                 sys.stdout.flush()
-            creds = "Planet Galactus created by Tyler Gutowski and Mishka Liamkin.\n"+\
+            creds = "Planet Galactus created by Tyler Gutowski and Michael Liamkin.\n"+\
                     "Created for the 2019 Codecraft competition.\n"+\
                     "Tyler Gutowski Github: https://github.com/tygutowski\n\n\n"+\
                     "Thank you for playing.  We hope you enjoyed."
