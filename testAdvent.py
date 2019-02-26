@@ -960,7 +960,7 @@ while (cont):
             line38355 = "\n\nYour ship is in poor condition after the beating given to it by the asteroids.\n"+\
                  "You need to get your FTL drive repaired.\n"+\
                  "You do not have enough money to repair your ship, so you are forced into selling "+saveItem+".\n"+\
-                 "Although you are sad you had to sell your prized posession, you turn your FTP drive on, and leave the quadrent as quickly as you can, on your way to Planet Galactus.\n"
+                 "Although you are sad you had to sell your prized posession, you turn your FTP drive on, and leave the quadrant as quickly as you can, on your way to Planet Galactus.\n"
             for s in line38355:
                         sleep(TYPESPEED)
                         sys.stdout.write(s)
@@ -970,7 +970,7 @@ while (cont):
             SENTIMENTAL = True
             line38354 = "Your ship was in pristeen condition, even after being pelted by small rocks, though it could use a new paintjob.\n"+\
                  "You're glad that "+saveItem+" has kept you company through your trek between the asteroids.\n"+\
-                 "You turn your FTP drive on, and leave the quadrent as quickly as you can, on your way to Planet Galactus.\n"
+                 "You turn your FTP drive on, and leave the quadrant as quickly as you can, on your way to Planet Galactus.\n"
             for s in line38354:
                         sleep(TYPESPEED)
                         sys.stdout.write(s)
