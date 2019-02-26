@@ -732,7 +732,7 @@ while (cont):
                 asteroids = []
 
                 # asteroid -> (x, y, radius, angle, speed)
-asteroid1 = [random.randint(0, width-75), random.randint(0, height-75), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
+                asteroid1 = [random.randint(0, width-75), random.randint(0, height-75), 60, math.pi * random.randint(1, 10) / random.randint(1, 10), .2*SPE]
                 asteroid2 = [random.randint(0, width-75), random.randint(0, height-75), 40, math.pi * random.randint(1, 10) / random.randint(1, 10), .5*SPE]
                 asteroid3 = [random.randint(0, width-75), random.randint(0, height-75), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .8*SPE]
                 asteroid4 = [random.randint(0, width-75), random.randint(0, height-75), 20, math.pi * random.randint(1, 10) / random.randint(1, 9), .9*SPE]
